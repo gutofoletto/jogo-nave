@@ -34,16 +34,17 @@ void keyboard(int key)
             exit(0);
             break;
         case 200:
-            nave->transformaNave(-0.1f, NULL);
+            nave->transformaNave(0.1f);
             break;
         case 201:
-            nave->transformaNave(NULL,Vetor(0.0f, 1.0f));
+            nave->acelerarNave(1.0f);
+            nave->transformaNave(NULL);
             break;
         case 202:
-            nave->transformaNave(0.1f, NULL);
+            nave->transformaNave(-0.1f);
             break;
         case 203:
-            nave->transformaNave(NULL,Vetor(0.0f, -1.0f));
+            nave->transformaNave(NULL);
             break;
     }
 }

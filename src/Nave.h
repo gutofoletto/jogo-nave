@@ -18,7 +18,7 @@ class Nave {
     float angulo;
     float escala;
     float aceleracao;
-    int vel_max;
+    float vel_max;
 
 public:
     Vetor base[5] = {
@@ -35,7 +35,7 @@ public:
         angulo = 0.0f;
         escala = 1.0f;
         aceleracao = 0.0f;
-        vel_max = 10;
+        vel_max = 10.0;
     }
 
     void desenharNave(){
@@ -46,44 +46,61 @@ public:
                 base[i+1].getX(), base[i+1].getY()
             );
         }
+        color(1,0,0);
+        line(posicao.getX(),posicao.getY(), posicao.getX()+direcao.getX()*100, posicao.getY()+direcao.getY()*100);
     }
 
-
-    void moverNave(Vetor p){
-        posicao.setX(posicao.getX()+p.getX());
-        posicao.setY(posicao.getY()+p.getY());
-
-        for(int i=0; i<5; i++){
-            float newX = geometria[i].getX() + posicao.getX();
-            float newY = geometria[i].getY() + posicao.getY();
-            base[i].setX(newX);
-            base[i].setY(newY);
-        }
+    void acelerarNave(float v){
+        aceleracao += v;
     }
 
-    void girarNave(float ang){
-        angulo += ang;
-        float seno = sin(angulo);
-        float coss = cos(angulo);
+    // void moverNave(Vetor p){
+    //     posicao.setX(posicao.getX()+p.getX());
+    //     posicao.setY(posicao.getY()+p.getY());
+    //
+    //     for(int i=0; i<5; i++){
+    //         float newX = geometria[i].getX() + posicao.getX();
+    //         float newY = geometria[i].getY() + posicao.getY();
+    //         base[i].setX(newX);
+    //         base[i].setY(newY);
+    //     }
+    // }
+    //
+    // void girarNave(float ang){
+    //     angulo += ang;
+    //     float seno = sin(angulo);
+    //     float coss = cos(angulo);
+    //
+    //     for(int i=0; i<5; i++){
+    //         float newX = (geometria[i].getX() * coss) - (geometria[i].getY() * seno)+ posicao.getX();
+    //         float newY = (geometria[i].getX() * seno) + (geometria[i].getY() * coss)+ posicao.getY();
+    //         base[i].setX(newX);
+    //         base[i].setY(newY);
+    //     }
+    // }
 
-        for(int i=0; i<5; i++){
-            float newX = (geometria[i].getX() * coss) - (geometria[i].getY() * seno)+ posicao.getX();
-            float newY = (geometria[i].getX() * seno) + (geometria[i].getY() * coss)+ posicao.getY();
-            base[i].setX(newX);
-            base[i].setY(newY);
-        }
-    }
-
-    void transformaNave(float ang = 0, Vetor p = Vetor(0,0)){
+    void transformaNave(float ang = 0){
         angulo = angulo + ang;
         float seno = sin(angulo);
         float coss = cos(angulo);
-        posicao.setX(posicao.getX()+p.getX());
-        posicao.setY(posicao.getY()+p.getY());
+        direcao.setX(cos(angulo+M_PI/2));
+        direcao.setY(sin(angulo+M_PI/2));
+
+        posicao.setX(posicao.getX()+direcao.getX());
+        posicao.setY(posicao.getY()+direcao.getY());
+
+        printf("\nX: %f, Y: %f" , direcao.getX(),direcao.getY() );
 
         for(int i=0; i<5; i++){
-            float newX = (geometria[i].getX() * coss) - (geometria[i].getY() * seno)+ posicao.getX();
-            float newY = (geometria[i].getX() * seno) + (geometria[i].getY() * coss)+ posicao.getY();
+            float newX =
+                (geometria[i].getX() * coss) - (geometria[i].getY() * seno)
+                + (posicao.getX())
+            ;
+            float newY =
+                (geometria[i].getX() * seno) + (geometria[i].getY() * coss)
+                + (posicao.getY())
+            ;
+
             base[i].setX(newX);
             base[i].setY(newY);
         }
