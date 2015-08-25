@@ -34,17 +34,16 @@ void keyboard(int key)
             exit(0);
             break;
         case 200:
-            nave->transformaNave(0.1f);
+            nave->transformarNave(0.1f);
             break;
         case 201:
-            nave->acelerarNave(1.0f);
-            nave->transformaNave(NULL);
+            nave->transformarNave(NULL);
             break;
         case 202:
-            nave->transformaNave(-0.1f);
+            nave->transformarNave(-0.1f);
             break;
         case 203:
-            nave->transformaNave(NULL);
+            nave->transformarNave(NULL);
             break;
     }
 }
@@ -66,6 +65,7 @@ int main(void)
     initCanvas(600,600);
 
     nave = new Nave();
+    nave->transformarNave();
 
     runCanvas();
 }

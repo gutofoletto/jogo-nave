@@ -30,7 +30,7 @@ public:
     };
 
     Nave(){
-        posicao = Vetor(0.0f, 0.0f);
+        posicao = Vetor(100.0f, 100.0f);
         direcao = Vetor(0.0f, 1.0f);
         angulo = 0.0f;
         escala = 1.0f;
@@ -68,21 +68,21 @@ public:
     //
     // void girarNave(float ang){
     //     angulo += ang;
-    //     float seno = sin(angulo);
-    //     float coss = cos(angulo);
+    //     float s = sin(angulo);
+    //     float c = cos(angulo);
     //
     //     for(int i=0; i<5; i++){
-    //         float newX = (geometria[i].getX() * coss) - (geometria[i].getY() * seno)+ posicao.getX();
-    //         float newY = (geometria[i].getX() * seno) + (geometria[i].getY() * coss)+ posicao.getY();
+    //         float newX = (geometria[i].getX() * c) - (geometria[i].getY() * s)+ posicao.getX();
+    //         float newY = (geometria[i].getX() * s) + (geometria[i].getY() * c)+ posicao.getY();
     //         base[i].setX(newX);
     //         base[i].setY(newY);
     //     }
     // }
 
-    void transformaNave(float ang = 0){
+    void transformarNave(float ang = 0){
         angulo = angulo + ang;
-        float seno = sin(angulo);
-        float coss = cos(angulo);
+        float s = sin(angulo);
+        float c = cos(angulo);
         direcao.setX(cos(angulo+M_PI/2));
         direcao.setY(sin(angulo+M_PI/2));
 
@@ -93,11 +93,11 @@ public:
 
         for(int i=0; i<5; i++){
             float newX =
-                (geometria[i].getX() * coss) - (geometria[i].getY() * seno)
+                (geometria[i].getX() * c) - (geometria[i].getY() * s)
                 + (posicao.getX())
             ;
             float newY =
-                (geometria[i].getX() * seno) + (geometria[i].getY() * coss)
+                (geometria[i].getX() * s) + (geometria[i].getY() * c)
                 + (posicao.getY())
             ;
 
