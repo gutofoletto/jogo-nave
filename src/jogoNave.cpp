@@ -1,25 +1,3 @@
-/*********************************************************************
-// Canvas para desenho - Versao CPP.
-//  Autor: Cesar Tadeu Pozzer
-//         10/2007
-//
-//  Pode ser utilizada para fazer desenhos ou animacoes, como jogos simples.
-//  Tem tratamento de mosue
-//  Estude o OpenGL antes de tentar compreender o arquivo gl_canvas.cpp
-//
-//  Instru��es:
-//    Para compilar em C, basta comentar o comando #define _CPP_
-//	  Para alterar a animacao, digite numeros entre 1 e 7
-/*********************************************************************/
-
-/*
-Autor: Cesar Tadeu Pozzer
-04/2013
-
-Instru��es:
-Para alterar a animacao, digite numeros entre 1 e 7
-*/
-
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,7 +16,7 @@ float global = 0;
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
-    nave->desenhaNave();
+    nave->desenharNave();
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -56,16 +34,16 @@ void keyboard(int key)
             exit(0);
             break;
         case 200:
-            nave->rodaNave(-5);
+            nave->transformaNave(-0.1f, NULL);
             break;
         case 201:
-            nave->aceleraNave();
+            nave->transformaNave(NULL,Vetor(0.0f, 1.0f));
             break;
         case 202:
-            nave->rodaNave(5);
+            nave->transformaNave(0.1f, NULL);
             break;
         case 203:
-            nave->aceleraNave();
+            nave->transformaNave(NULL,Vetor(0.0f, -1.0f));
             break;
     }
 }
