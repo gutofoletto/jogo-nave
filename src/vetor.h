@@ -7,7 +7,7 @@
 
 class Vetor {
     float x, y;
-    
+
     public:
         Vetor(float x = 0, float y = 0){
             this->x = x;
@@ -28,6 +28,15 @@ class Vetor {
 
         float getY(){
             return this->y;
+        }
+
+        Vetor girarVetor(float angulo){
+            float c = cos(angulo);
+            float s = sin(angulo);
+            return Vetor(
+                (this->x * c) - (this->y * s),
+                (this->x * s) + (this->y * c)
+            );
         }
 };
 
