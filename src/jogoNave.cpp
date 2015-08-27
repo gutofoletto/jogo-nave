@@ -52,7 +52,12 @@ void keyboard(int key)
 {
     switch(key) {
         case 27:
+            //esc
             exit(0);
+            break;
+        case 32:
+            //spacebar
+            nave->getBala().disparaProjetil();
             break;
         case 200:
             //left

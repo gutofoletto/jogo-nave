@@ -1,9 +1,10 @@
 #ifndef __NAVE_H__
 #define __NAVE_H__
 
+#include <iostream>
 #include "gl_canvas2d.h"
 #include "vetor.h"
-#include <iostream>
+#include "projetil.h"
 
 class Nave {
     Vetor geometria[5] = {
@@ -15,11 +16,13 @@ class Nave {
     };
     Vetor posicao;
     Vetor direcao;
+    Projetil bala;
     float angulo;
     float escala;
     float aceleracao;
     bool movendo;
     bool girando;
+
 
 public:
     Vetor base[5] = {
@@ -33,6 +36,7 @@ public:
     Nave(){
         posicao = Vetor(400.0f, 300.0f);
         direcao = Vetor(0.0f, 1.0f);
+        bala = Projetil(posicao.getX(), posicao.getY());
         angulo = 0.0f;
         escala = 1.0f;
         aceleracao = 0.0f;
@@ -60,6 +64,10 @@ public:
         return this->aceleracao;
     }
 
+    Projetil getBala(){
+        return this->bala;
+    }
+
     void desenharNave(){
         for(int i=0; i<4; i++){
             color(0,0,0);
@@ -68,8 +76,11 @@ public:
                 base[i+1].getX(), base[i+1].getY()
             );
         }
-        color(1,0,0);
-        line(posicao.getX(),posicao.getY(), posicao.getX()+direcao.getX()*50, posicao.getY()+direcao.getY()*50);
+        //color(1,0,0);
+        //line(posicao.getX(),posicao.getY(), posicao.getX()+direcao.getX()*50, posicao.getY()+direcao.getY()*50);
+
+        this->bala.desenharProjetil();
+
     }
 
     void acelerarNave(float v){
@@ -88,8 +99,6 @@ public:
 
     void transformarNave(float ang = 0.0f){
         if(ang != 0.0f) this->angulo += (ang);
-        float s = sin(this->angulo);
-        float c = cos(this->angulo);
         direcao.setX(cos(this->angulo+M_PI/2));
         direcao.setY(sin(this->angulo+M_PI/2));
 
@@ -104,6 +113,8 @@ public:
             base[i].setX(v.getX());
             base[i].setY(v.getY());
         }
+
+        this->bala.transformarProjetil(this->angulo, this->aceleracao);
     }
 };
 
