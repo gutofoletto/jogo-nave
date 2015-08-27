@@ -31,7 +31,7 @@ public:
     };
 
     Nave(){
-        posicao = Vetor(100.0f, 100.0f);
+        posicao = Vetor(400.0f, 300.0f);
         direcao = Vetor(0.0f, 1.0f);
         angulo = 0.0f;
         escala = 1.0f;
@@ -52,7 +52,7 @@ public:
         this->girando = g;
     }
 
-    bool getGirando(){
+    bool estaGirando(){
         return this->girando;
     }
 
@@ -73,9 +73,17 @@ public:
     }
 
     void acelerarNave(float v){
-        if(v != 0.0f && this->aceleracao < 10.0f) this->aceleracao += (v);
-        else if(v < 0 && this->aceleracao <= 0) this->aceleracao = 0.0f;
-        else this->aceleracao = 0.0f;
+        if(v > 0.0f && this->aceleracao < 7.0f) this->aceleracao += (v);
+    }
+
+    void desacelerarNave(){
+        if(this->aceleracao > 0.0f){
+            this->aceleracao -= 0.2f;
+        }
+    }
+
+    void pararNave(){
+        this->aceleracao = 0.0f;
     }
 
     void transformarNave(float ang = 0.0f){
@@ -89,17 +97,12 @@ public:
         posicao.setY(posicao.getY()+direcao.getY()*aceleracao);
 
         for(int i=0; i<5; i++){
-            float newX =
-                (geometria[i].getX() * c) - (geometria[i].getY() * s)
-                + (posicao.getX())
-            ;
-            float newY =
-                (geometria[i].getX() * s) + (geometria[i].getY() * c)
-                + (posicao.getY())
-            ;
 
-            base[i].setX(newX);
-            base[i].setY(newY);
+            Vetor v = geometria[i].girarVetor(this->angulo);
+            v = v.moverVetor(posicao);
+
+            base[i].setX(v.getX());
+            base[i].setY(v.getY());
         }
     }
 };

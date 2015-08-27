@@ -38,6 +38,13 @@ class Vetor {
                 (this->x * s) + (this->y * c)
             );
         }
+
+        Vetor moverVetor(Vetor v){
+            return Vetor(
+                this->x + v.getX(),
+                this->y + v.getY()
+            );
+        }
 };
 
 #endif

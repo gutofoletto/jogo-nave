@@ -6,21 +6,44 @@
 #include "Nave.h"
 
 Nave *nave = NULL;
+float angulo = 0;
+int k = 0;
+
+int main(void) {
+    initCanvas(800,600);
+
+    nave = new Nave();
+    nave->transformarNave();
+
+    runCanvas();
+}
 
 //funcao chamada continuamente. Deve-se controlar o que desenhar por meio de variaveis
 //globais que podem ser setadas pelo metodo keyboard()
 void render()
 {
 
-    if(nave->estaMovendo() == true){
-        nave->transformarNave();
-    }
+    if(nave->estaMovendo() == true)
+        nave->acelerarNave(0.1f);
 
-    if(nave->estaMovendo() == false && nave->getAceleracao() > 0){
-        nave->acelerarNave(-0.075f);
-        nave->transformarNave();
-    }
+    if(nave->estaGirando() == true && k == 200)
+        angulo = 0.1f;
+    else if(nave->estaGirando() == true && k == 202)
+        angulo = -0.1f;
+    else angulo = 0;
 
+    if(nave->estaMovendo() == false && nave->getAceleracao() > 0)
+        nave->desacelerarNave();
+
+    if(nave->getAceleracao() < 0)
+        nave->pararNave();
+
+    // if (nave->getPosicao() > this.game.width) this.ship.x = 0;
+    // if (this.ship.x < 0) this.ship.x = this.game.width;
+    // if (this.ship.y > this.game.height) this.ship.y = 0;
+    // if (this.ship.y < 0) this.ship.y = this.game.height;
+
+    nave->transformarNave(angulo);
     nave->desenharNave();
 }
 
@@ -32,17 +55,24 @@ void keyboard(int key)
             exit(0);
             break;
         case 200:
-            nave->transformarNave(0.1f);
+            //left
+            nave->setGirando(true);
+            k = 200;
             break;
         case 201:
+            //up
             nave->setMovendo(true);
-            nave->acelerarNave(0.3f);
+            k = 201;
             break;
         case 202:
-            nave->transformarNave(-0.1f);
+            //right
+            nave->setGirando(true);
+            k = 202;
             break;
         case 203:
+            //down
             nave->setMovendo(false);
+            k = 203;
             break;
     }
 }
@@ -52,15 +82,22 @@ void keyboardUp(int key) {
     switch(key) {
         case 200:
             //left
+            nave->setGirando(false);
+            k = 0;
             break;
         case 201:
             //up
+            nave->setMovendo(false);
+            k = 0;
             break;
         case 202:
             //right
+            nave->setGirando(false);
+            k = 0;
             break;
         case 203:
             //down
+            k = 0;
             break;
     }
 }
@@ -68,13 +105,4 @@ void keyboardUp(int key) {
 //funcao para tratamento de mouse: cliques, movimentos e arrastos
 void mouse(int button, int state, int x, int y) {
     //printf("\nmouse %d %d %d %d", button, state, x, y);
-}
-
-int main(void) {
-    initCanvas(800,600);
-
-    nave = new Nave();
-    nave->transformarNave();
-
-    runCanvas();
 }
