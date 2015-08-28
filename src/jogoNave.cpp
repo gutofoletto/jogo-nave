@@ -8,6 +8,7 @@
 Nave *nave = NULL;
 float angulo = 0;
 int k = 0;
+int controleDisparo = 10;
 
 int main(void) {
     initCanvas(800,600);
@@ -37,8 +38,14 @@ void render()
     if(nave->getAceleracao() < 0)
         nave->pararNave();
 
-    // if(nave->estaDisparando() == true)
-    //     nave->dispararBala();
+    if(nave->estaDisparando() == true){
+        if(controleDisparo >= 5){
+            nave->dispararBala();
+            controleDisparo = 0;
+        }
+        controleDisparo++;
+    }
+
 
     // if (nave->getPosicao() > this.game.width) this.ship.x = 0;
     // if (this.ship.x < 0) this.ship.x = this.game.width;
@@ -59,8 +66,7 @@ void keyboard(int key)
             break;
         case 32:
             //spacebar
-            //nave->setDisparando(true);
-            nave->dispararBala();
+            nave->setDisparando(true);
             break;
         case 200:
             //left
@@ -90,7 +96,8 @@ void keyboardUp(int key) {
     switch(key) {
         case 32:
             //spacebar
-            //nave->setDisparando(false);
+            nave->setDisparando(false);
+            controleDisparo = 5;
             break;
         case 200:
             //left
