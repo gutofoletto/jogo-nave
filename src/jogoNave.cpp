@@ -13,7 +13,6 @@ int main(void) {
     initCanvas(800,600);
 
     nave = new Nave();
-    nave->transformarNave();
 
     runCanvas();
 }
@@ -24,7 +23,7 @@ void render()
 {
 
     if(nave->estaMovendo() == true)
-        nave->acelerarNave(0.1f);
+        nave->acelerarNave();
 
     if(nave->estaGirando() == true && k == 200)
         angulo = 0.1f;
@@ -37,6 +36,9 @@ void render()
 
     if(nave->getAceleracao() < 0)
         nave->pararNave();
+
+    // if(nave->estaDisparando() == true)
+    //     nave->dispararBala();
 
     // if (nave->getPosicao() > this.game.width) this.ship.x = 0;
     // if (this.ship.x < 0) this.ship.x = this.game.width;
@@ -57,7 +59,8 @@ void keyboard(int key)
             break;
         case 32:
             //spacebar
-            nave->getBala().disparaProjetil();
+            //nave->setDisparando(true);
+            nave->dispararBala();
             break;
         case 200:
             //left
@@ -85,6 +88,10 @@ void keyboard(int key)
 //funcao chamada toda vez que uma tecla for liberada
 void keyboardUp(int key) {
     switch(key) {
+        case 32:
+            //spacebar
+            //nave->setDisparando(false);
+            break;
         case 200:
             //left
             nave->setGirando(false);
