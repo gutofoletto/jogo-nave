@@ -88,6 +88,14 @@ public:
         this->aceleracao = 0.0f;
     }
 
+    void setPosicao(Vetor posicao){
+        this->posicao = posicao;
+    }
+
+    Vetor getPosicao(){
+        return this->posicao;
+    }
+
     void desenharNave(){
         for(int i=0; i<4; i++){
             color(0,0,0);

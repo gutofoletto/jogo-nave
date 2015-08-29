@@ -5,13 +5,16 @@
 #include "gl_canvas2d.h"
 #include "Nave.h"
 
+const int w = 800;
+const int h = 600;
+
 Nave *nave = NULL;
 float angulo = 0;
 int k = 0;
 int controleDisparo = 10;
 
 int main(void) {
-    initCanvas(800,600);
+    initCanvas(w, h);
 
     nave = new Nave();
 
@@ -47,10 +50,17 @@ void render()
     }
 
 
-    // if (nave->getPosicao() > this.game.width) this.ship.x = 0;
-    // if (this.ship.x < 0) this.ship.x = this.game.width;
-    // if (this.ship.y > this.game.height) this.ship.y = 0;
-    // if (this.ship.y < 0) this.ship.y = this.game.height;
+    if (nave->getPosicao().getX() > w)
+        nave->setPosicao(Vetor(0, nave->getPosicao().getY()));
+
+    if (nave->getPosicao().getX() < 0)
+        nave->setPosicao(Vetor(w, nave->getPosicao().getY()));
+
+    if (nave->getPosicao().getY() > h)
+        nave->setPosicao(Vetor(nave->getPosicao().getX(), 0));
+
+    if (nave->getPosicao().getY() < 0)
+        nave->setPosicao(Vetor(nave->getPosicao().getX(), h));
 
     nave->transformarNave(angulo);
     nave->desenharNave();
