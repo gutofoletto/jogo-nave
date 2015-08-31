@@ -30,6 +30,22 @@ class Vetor {
             return this->y;
         }
 
+        float comprimento(){
+            return sqrt(x*x + y*y);
+        }
+
+        Vetor normalizar(){
+            float x2, y2;
+            float comp = this->comprimento();
+
+            if(comp != 0){
+                x2 = this->x/comp;
+                y2 = this->y/comp;
+            }
+
+            return Vetor(x2, y2);
+        }
+
         Vetor girarVetor(float angulo){
             float c = cos(angulo);
             float s = sin(angulo);
@@ -44,6 +60,19 @@ class Vetor {
                 this->x + v.getX(),
                 this->y + v.getY()
             );
+        }
+
+        float produtoEscalar(Vetor v)
+        {
+            return x * v.getX() + y * v.getY();
+        }
+
+        float angulo() {
+        	return atan2(x, y);
+        }
+
+        float anguloRelativo(Vetor v){
+        	return this->angulo() - v.angulo();
         }
 };
 

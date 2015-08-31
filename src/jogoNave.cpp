@@ -3,12 +3,15 @@
 #include <stdlib.h>
 
 #include "gl_canvas2d.h"
-#include "Nave.h"
+#include "nave.h"
+#include "inimigo.h"
 
 const int w = 800;
 const int h = 600;
 
 Nave *nave = NULL;
+std::vector<Inimigo> inimigos;
+
 float angulo = 0;
 int k = 0;
 int controleDisparo = 10;
@@ -17,6 +20,12 @@ int main(void) {
     initCanvas(w, h);
 
     nave = new Nave();
+
+    Inimigo e = Inimigo(Vetor(100.0f, 100.0f));
+    Inimigo f = Inimigo(Vetor(700.0f, 500.0f));
+
+    inimigos.push_back(e);
+    inimigos.push_back(f);
 
     runCanvas();
 }
@@ -42,7 +51,7 @@ void render()
         nave->pararNave();
 
     if(nave->estaDisparando() == true){
-        if(controleDisparo >= 5){
+        if(controleDisparo >= 10){
             nave->dispararBala();
             controleDisparo = 0;
         }
@@ -64,6 +73,16 @@ void render()
 
     nave->transformarNave(angulo);
     nave->desenharNave();
+
+    for(int i=0; i<inimigos.size(); i++){
+        inimigos[i].desenharInimigo();
+        if(inimigos[i].existeBala() == false){
+            Vetor alvo = inimigos[i].localizarNave(nave->getPosicao());
+            inimigos[i].dispararBala(alvo);
+        } else {
+            inimigos[i].animarBalas();
+        }
+    }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada

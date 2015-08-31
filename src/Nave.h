@@ -1,7 +1,6 @@
 #ifndef __NAVE_H__
 #define __NAVE_H__
 
-#include <iostream>
 #include <vector>
 #include "gl_canvas2d.h"
 #include "vetor.h"
