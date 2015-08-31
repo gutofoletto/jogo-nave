@@ -36,13 +36,7 @@ class Inimigo {
         }
 
         Vetor localizarNave(Vetor p){
-            p = p.normalizar();
-            Vetor q = posicao.normalizar();
-
-            float dp = q.produtoEscalar(p);
-            float angPI = acos(dp);
-
-            return Vetor(0,1);
+            return posicao.subtrairVetor(p).normalizar();
         }
 
         void dispararBala(Vetor direcao){

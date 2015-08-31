@@ -46,6 +46,13 @@ class Vetor {
             return Vetor(x2, y2);
         }
 
+        Vetor subtrairVetor(Vetor v){
+            return Vetor(
+                this->x - v.getX(),
+                this->y - v.getY()
+            );
+        }
+
         Vetor girarVetor(float angulo){
             float c = cos(angulo);
             float s = sin(angulo);
