@@ -22,10 +22,16 @@ int main(void) {
     nave = new Nave();
 
     Inimigo e = Inimigo(Vetor(100.0f, 100.0f));
-    Inimigo f = Inimigo(Vetor(700.0f, 500.0f));
-
     inimigos.push_back(e);
+
+    Inimigo f = Inimigo(Vetor(700.0f, 500.0f));
     inimigos.push_back(f);
+
+    Inimigo g = Inimigo(Vetor(100.0f, 500.0f));
+    inimigos.push_back(g);
+
+    Inimigo h = Inimigo(Vetor(700.0f, 100.0f));
+    inimigos.push_back(h);
 
     runCanvas();
 }
@@ -77,8 +83,8 @@ void render()
     for(int i=0; i<inimigos.size(); i++){
         inimigos[i].desenharInimigo();
         if(inimigos[i].existeBala() == false){
-            Vetor alvo = inimigos[i].localizarNave(nave->getPosicao());
-            inimigos[i].dispararBala(alvo);
+            inimigos[i].localizarNave(nave->getPosicao());
+            inimigos[i].dispararBala();
         } else {
             inimigos[i].animarBalas();
         }

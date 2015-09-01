@@ -1,5 +1,8 @@
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <vector>
-#include "gl_canvas2d.h"
 #include "vetor.h"
 
 class Inimigo {
@@ -13,7 +16,7 @@ class Inimigo {
         Inimigo(Vetor pos){
             raio = 10.0f;
             angulo = 0.0f;
-            direcao = Vetor(0, 1);
+            direcao = Vetor(1, 0);
             posicao = pos;
         }
 
@@ -35,14 +38,26 @@ class Inimigo {
             else return false;
         }
 
-        Vetor localizarNave(Vetor p){
-            return posicao.subtrairVetor(p).normalizar();
+        void localizarNave(Vetor p){
+            Vetor alvo = p.subtrairVetor(posicao).normalizar();
+            float dp = direcao.produtoEscalar(alvo);
+
+            if(dp >= 1.0f) dp = 1.0f;
+            else if (dp <= -1.0) dp = -1.0f;
+
+            float angPI = (float)acos(dp);
+
+            if(direcao.getY()*alvo.getX() > direcao.getX()*alvo.getY()){
+                this->angulo = -angPI;
+            } else this->angulo = angPI;
         }
 
-        void dispararBala(Vetor direcao){
+        void dispararBala(){
+            Vetor alvo = Vetor(cos(angulo), sin(angulo));
+
             Projetil p = Projetil(
                 this->posicao,
-                direcao
+                alvo
             );
 
             balas.push_back(p);
